@@ -100,16 +100,21 @@
                             <legend visible="true"><i><strong>previous crops planted</strong></i>
                             </legend>
                             <select class="form-control" id="sfPreviousCropSelect">
-                                <option>no nitrogen-supplying crop</option>
-                                <option>Soybean, Dry Bean, Field Pea, Lentil, Chickpea, or harvested Sweet Clover
+                                <option value="0">no nitrogen-supplying crop</option>
+                                <option value="40">Soybean, Dry Bean, Field Pea, Lentil, Chickpea, or harvested Sweet
+                                    Clover
                                 </option>
-                                <option>sugarbeet with yellow leaves at harvest</option>
-                                <option>sugarbeet with yellow-green leaves at harvest</option>
-                                <option>sugarbeet with dark-green leaves at harvest</option>
-                                <option>harvested alfalfa or unharvested sweet clover (>=5 plants per sqft)</option>
-                                <option>harvested alfalfa or unharvested sweet clover (3-4 plants per sqft)</option>
-                                <option>harvested alfalfa or unharvested sweet clover (1-2 plants per sqft)</option>
-                                <option>harvested alfalfa or unharvested sweet clover (<1 plants per sqft)</option>
+                                <option value="0">sugarbeet with yellow leaves at harvest</option>
+                                <option value="30">sugarbeet with yellow-green leaves at harvest</option>
+                                <option value="80">sugarbeet with dark-green leaves at harvest</option>
+                                <option value="150">harvested alfalfa or unharvested sweet clover (5+ plants per sqft)
+                                </option>
+                                <option value="100">harvested alfalfa or unharvested sweet clover (3-4 plants per sqft)
+                                </option>
+                                <option value="50">harvested alfalfa or unharvested sweet clover (1-2 plants per sqft)
+                                </option>
+                                <option value="0">harvested alfalfa or unharvested sweet clover (less than 1 plants per
+                                    sqft)</option>
                             </select>
                         </fieldset>
                     </div>
@@ -119,7 +124,7 @@
                         </div>
                         <br>
                         <fieldset>
-                            <legend visible="true"><i><strong>interested region in North Dakota</strong></i></legend>
+                            <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
                                     <input type="radio" name="sfRegion" checked>&nbsp; Western ND
@@ -182,46 +187,55 @@
 
                 <hr>
                 <div class="centerDiv">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    <button type="button" class="btn btn-primary" id="sfCalculateBtn" data-toggle="modal"
+                        data-target="#myModal">
                         <b>CALCULATE</b>
                     </button>
                 </div>
 
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog modal-lg">
-
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Nitrogen Recomendation After Credits (lbs/acre)</h4>
+                                <h5 class="modal-title">Nitrogen Recomendation After Credits</h5>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="centerDiv">
-                                    <em>result goes here</em>
+                                    <h5 id="sfResultText">result goes here</h5>
+                                    <h5>&nbsp;&nbsp;&nbsp;±20&nbsp;&nbsp;lbs/acre</h5>
                                 </div>
+                                <br>
                                 <div>
-                                    <a href="#demo" class="btn btn-warning" data-toggle="collapse">Note About the Result</a>
-                                    <div id="demo" class="collapse">
-                                        The final N recommendation is an average optimal rate.
-                                        Your final N rate decision may be plus or minus 20 pounds N per acre from that
-                                        value depending on individual field situations.
-                                        The value assumes an optimal N application and timing strategy.
-                                        If these strategies are not optimal, a greater N rate maybe needed.
-                                        Suboptimal N application strategies include to early N application the fall
-                                        prior to seeding,
-                                        surface urea/UAN application or lightly incorporated urea/UAN, or shallow
-                                        ammonia application.
-                                        Fields that are first year sunflower,
-                                        or sunflower more then 4 years after a deep rooted crop including sunflower may
-                                        have have deep N,
-                                        and a minimal N preplant application followed by side-dress application at V5-V8
-                                        is recommended.
+                                    <a href="#sfdemo" class="btn btn-warning" data-toggle="collapse"
+                                        style="float:right">
+                                        Note About the Result
+                                    </a>
+                                    <div id="sfdemo" class="collapse">
+                                        <br>
+                                        <p>
+                                            The final N recommendation is an average optimal rate.
+                                            Your final N rate decision may be plus or minus 20 pounds N per acre from
+                                            that
+                                            value depending on individual field situations.
+                                            The value assumes an optimal N application and timing strategy.
+                                            If these strategies are not optimal, a greater N rate maybe needed.
+                                            Suboptimal N application strategies include to early N application the fall
+                                            prior to seeding,
+                                            surface urea/UAN application or lightly incorporated urea/UAN, or shallow
+                                            ammonia application.
+                                            Fields that are first year sunflower,
+                                            or sunflower more then 4 years after a deep rooted crop including sunflower
+                                            may
+                                            have have deep N,
+                                            and a minimal N preplant application followed by side-dress application at
+                                            V5-V8
+                                            is recommended.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -234,8 +248,210 @@
 
             <!-- corn calculator -->
             <div id="corn" class="container tab-pane fade"><br>
-                <h3>corn calculator</h3>
+                <div class="row">
+                    <div class="col-sm-5" style="padding-right:20px;">
+                        <div class="aboutTitles">
+                            <h4>Corn Nitrogen Calculator</h4>
+                        </div>
+                        <hr>
+                        <fieldset>
+                            <legend visible="true"><i><strong>closest corn price ($/bushel)</strong></i></legend>
+                            <div>
+                                <select class="form-control" id="cornPriceSelect">
+                                </select>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>closest nitrogen cost ($/lb)</strong></i></legend>
+                            <div>
+                                <select class="form-control" id="cornNitrogenPriceSelect">
+                                </select>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>percent organic matter in soil (%)</strong></i></legend>
+                            <div class="form-group">
+                                <input type="number" step="0.1" class="form-control" id="cornOrganicMatterInput"
+                                    value="0">
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>2-ft depth soil test nitrate-N (lbs/acre)</strong></i>
+                            </legend>
+                            <div class="form-group">
+                                <input type="number" step="0.1" class="form-control" id="cornSoilTestnitrateInput"
+                                    value="0">
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>previous crops planted</strong></i>
+                            </legend>
+                            <select class="form-control" id="cornPreviousCropSelect">
+                                <option value="0">no nitrogen-supplying crop</option>
+                                <option value="40">Soybean, Dry Bean, Field Pea, Lentil, Chickpea, or harvested Sweet
+                                    Clover
+                                </option>
+                                <option value="0">sugarbeet with yellow leaves at harvest</option>
+                                <option value="30">sugarbeet with yellow-green leaves at harvest</option>
+                                <option value="80">sugarbeet with dark-green leaves at harvest</option>
+                                <option value="150">harvested alfalfa or unharvested sweet clover (5+ plants per sqft)
+                                </option>
+                                <option value="100">harvested alfalfa or unharvested sweet clover (3-4 plants per sqft)
+                                </option>
+                                <option value="50">harvested alfalfa or unharvested sweet clover (1-2 plants per sqft)
+                                </option>
+                                <option value="0">harvested alfalfa or unharvested sweet clover (less than 1 plants per
+                                    sqft)</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-7" style="padding-left:20px;">
+                        <div class="centerDiv">
+                            <img src="images/ND.jpg" alt="ND 2-region map" width="75%">
+                        </div>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornRegion" value="westND" checked>&nbsp; Western ND
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornRegion" value="eastND">&nbsp; Eastern ND
+                                </label>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset id="tillDiv">
+                            <legend visible="true"><i><strong>irrigation and tillage</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label>
+                                    <input type="radio" name="cornTill" value="irrigate" checked>&nbsp; Irrigated
+                                </label>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornTill" value="longNoTill">&nbsp; Non-irrigated and
+                                    long-term no-till
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="long-term no-till: No till for at least 6 consecutive years">
+                                    <i class="fa fa-info-circle" style="font-size:18px; color:green"></i>
+                                </a>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornTill" value="convTill">&nbsp; Non-irrigated and
+                                    conventional tillage
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="conventional tillage: Tillage greater than 2-inch depth. Thin ammonia shank or strip-till shank does not contribute to conventional till.">
+                                    <i class="fa fa-info-circle"
+                                        style="text-align:left; font-size:18px; color:green"></i>
+                                </a>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornTill" value="minNoTill">&nbsp; Non-irrigated and
+                                    minimal no-till
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="minimal no-till: No till less than 6 consecutive years; also called short-term no-till">
+                                    <i class="fa fa-info-circle" style="font-size:18px; color:green"></i>
+                                </a>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset id="soilTextureDiv">
+                            <legend visible="true"><i><strong>soil texture and historic yield</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label>
+                                    <input type="radio" name="cornSoiltexture" checked>&nbsp; high-clay soils with
+                                    historic yield no less than 160 bushel/acre
+                                </label>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornSoiltexture">&nbsp; high-clay soils with historic
+                                    yield less than 160 bushel/acre
+                                </label>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornSoiltexture">&nbsp; medium-texture soils with historic
+                                    yield no less than 160 bushel/acre
+                                </label>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornSoiltexture">&nbsp; medium-texture soils with historic
+                                    yield less than 160 bushel/acre
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
 
+                <hr>
+                <div class="centerDiv">
+                    <button type="button" class="btn btn-primary" id="cornCalculateBtn" data-toggle="modal"
+                        data-target="#cornModal">
+                        <b>CALCULATE</b>
+                    </button>
+                </div>
+
+                <div class="modal fade" id="cornModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Nitrogen Recomendation After Credits</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="centerDiv">
+                                    <h5 id="cornResultText">result goes here<h5>
+                                    <h5>&nbsp;&nbsp;&nbsp;±30&nbsp;&nbsp;lbs/acre</h5>
+                                </div>
+                                <br>
+                                <div>
+                                    <a href="#corndemo" class="btn btn-warning" data-toggle="collapse"
+                                        style="float:right">
+                                        Note About the Result
+                                    </a>
+                                    <div id="corndemo" class="collapse">
+                                        <br>
+                                        <p>
+                                            Nitrogen recommendation in this app is based on an economic production
+                                            function
+                                            that takes into account the yield response of corn to added N, less the cost
+                                            of the N.
+                                        </p>
+                                        <p>
+                                            High clay soils are subject to N loss due to denitrification in wet years.
+                                            If spring rainfall is normal and the soil is muddy for less than 10 days,
+                                            the preplant N recommendation should be sufficient for high yield.
+                                            If rains result in muddy conditions for more than 10 days,
+                                            supplemental N as sidedress is strongly recommended. Estimate 1.5% nitrate-N
+                                            loss per muddy day.
+                                            A better recommendation is to utilize the high clay soil with yield
+                                            potential greater than
+                                            160 bushels per acre active-optical sensor algorithm to direct variable-rate
+                                            sidedress rates.
+                                            The active-optical sensor algorithm will require the grower to establish an
+                                            N-rich strip
+                                            in the soil category within a variety for its use.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <!-- wheat calculator -->
