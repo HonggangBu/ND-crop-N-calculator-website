@@ -4,16 +4,25 @@ $(function () {
     "use strict";
     $('[data-toggle="tooltip"]').tooltip();
 
-    AddOptions($("#sunflowerPriceSelect"), 0.09, 0.03, 0.60, 2); // sunflower price list
-    AddOptions($("#sunflowerNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // sunflower nitrogen cost list
-    OnSunflowerCalculateBtnClicked();
+    //sunflower functions//
+    AddOptions($("#sunflowerPriceSelect"), 0.09, 0.03, 0.60, 2); // auto add sunflower price list
+    AddOptions($("#sunflowerNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add sunflower nitrogen cost list
+    OnSunflowerCalculateBtnClicked(); // on Sunflower Calculate Btn Clicked, display result
 
-
-    AddOptions($("#cornPriceSelect"), 2, 1, 20, 0); // corn price list
-    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // corn nitrogen cost list
+    //corn functions//
+    AddOptions($("#cornPriceSelect"), 2, 1, 20, 0); // auto add corn price list
+    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add corn nitrogen cost list
     OnCornRegionChange(); // hide or show irrigation/tillage div and soil texture/yield div when west ND or east ND selection is changed 
     OnCornTillChange(); // hide or show the division of soil texture/historic yield based on the change of irrigation/tillage
-    OnCornCalculateBtnClicked();
+    OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
+
+
+    //wheat & durum functions//
+    AddOptions($("#wheatPriceSelect"), 3, 1, 20, 0); // auto add wheat price list
+    AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add wheat nitrogen cost list
+    OnWheatCalculateBtnClicked(); // on wheat Calculate Btn Clicked, display result
+
+
 });
 
 ////////////////////////////////////////////////////
@@ -36,10 +45,10 @@ function AddOptions(selectControl, startValue, increment, endValue, precision) {
 
 //////////////////////////    SUNFLOWER FUNCTIONS    ////////////////////////////
 
-function OnSunflowerCalculateBtnClicked(){
-    $("#sfCalculateBtn").click(function(){
+function OnSunflowerCalculateBtnClicked() {
+    $("#sfCalculateBtn").click(function () {
         $("#sfResultText").text("The calculate button was clicked.");
-      });
+    });
 }
 
 
@@ -90,12 +99,18 @@ function CornTillResponse() {
 }
 
 
-function OnCornCalculateBtnClicked(){
-    $("#cornCalculateBtn").click(function(){
+function OnCornCalculateBtnClicked() {
+    $("#cornCalculateBtn").click(function () {
         $("#cornResultText").text("The calculate button was clicked.");
-      });
+    });
 }
 
 /////////////////////////////////////////////
 
 /////////////////////  WHEAT FUNCTIONS  ////////////////////////
+function OnWheatCalculateBtnClicked() {
+    $("#wheatCalculateBtn").click(function () {
+        $("#wheatResultText").text("The calculate button was clicked.");
+    });
+}
+

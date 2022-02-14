@@ -127,15 +127,15 @@
                             <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion" checked>&nbsp; Western ND
+                                    <input type="radio" name="sfRegion" value="west" checked>&nbsp; Western ND
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion">&nbsp; Eastern ND
+                                    <input type="radio" name="sfRegion" value="east">&nbsp; Eastern ND
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion">&nbsp; langdon area
+                                    <input type="radio" name="sfRegion" value="langdon">&nbsp; Langdon area
                                 </label>
                             </div>
                         </fieldset>
@@ -144,7 +144,8 @@
                             <legend visible="true"><i><strong>tillage type</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfTillage" checked>&nbsp; conventional tillage
+                                    <input type="radio" name="sfTillage" value="convTill" checked>&nbsp; conventional
+                                    tillage
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="Tillage greater than 2-inch depth. Thin ammonia shank or strip-till shank does not contribute to conventional till.">
@@ -153,7 +154,7 @@
                                 </a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfTillage">&nbsp; minimal no-till
+                                    <input type="radio" name="sfTillage" value="minNoTill">&nbsp; minimal no-till
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="No till less than 6 consecutive years; also called short-term no-till">
@@ -161,7 +162,7 @@
                                 </a>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfTillage">&nbsp; long-term no-till
+                                    <input type="radio" name="sfTillage" value="longNoTill">&nbsp; long-term no-till
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="No till for at least 6 consecutive years">
@@ -174,11 +175,11 @@
                             <legend visible="true"><i><strong>sunflower type</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfType" checked>&nbsp; oilseed
+                                    <input type="radio" name="sfType" value="oilseed" checked>&nbsp; oilseed
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfType">&nbsp; confection
+                                    <input type="radio" name="sfType" value="confection">&nbsp; confection
                                 </label>
                             </div>
                         </fieldset>
@@ -188,12 +189,12 @@
                 <hr>
                 <div class="centerDiv">
                     <button type="button" class="btn btn-primary" id="sfCalculateBtn" data-toggle="modal"
-                        data-target="#myModal">
+                        data-target="#sfModal">
                         <b>CALCULATE</b>
                     </button>
                 </div>
 
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="sfModal" role="dialog">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -410,7 +411,7 @@
                             <div class="modal-body">
                                 <div class="centerDiv">
                                     <h5 id="cornResultText">result goes here<h5>
-                                    <h5>&nbsp;&nbsp;&nbsp;±30&nbsp;&nbsp;lbs/acre</h5>
+                                            <h5>&nbsp;&nbsp;&nbsp;±30&nbsp;&nbsp;lbs/acre</h5>
                                 </div>
                                 <br>
                                 <div>
@@ -456,7 +457,223 @@
 
             <!-- wheat calculator -->
             <div id="wheat" class="container tab-pane fade"><br>
-                <h3>wheat and durum calculator</h3>
+                <div class="row">
+                    <div class="col-sm-5" style="padding-right:20px;">
+                        <div class="aboutTitles">
+                            <h4>Wheat & Durum Nitrogen Calculator</h4>
+                        </div>
+                        <hr>
+                        <fieldset>
+                            <legend visible="true"><i><strong>closest wheat/durum price ($/bushel)</strong></i></legend>
+                            <div>
+                                <select class="form-control" id="wheatPriceSelect">
+                                </select>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>closest nitrogen cost ($/lb)</strong></i></legend>
+                            <div>
+                                <select class="form-control" id="wheatNitrogenPriceSelect">
+                                </select>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>percent organic matter in soil (%)</strong></i></legend>
+                            <div class="form-group">
+                                <input type="number" step="0.1" class="form-control" id="wheatOrganicMatterInput"
+                                    value="0">
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>2-ft depth soil test nitrate-N (lbs/acre)</strong></i>
+                            </legend>
+                            <div class="form-group">
+                                <input type="number" step="0.1" class="form-control" id="wheatSoilTestnitrateInput"
+                                    value="0">
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>previous crops planted</strong></i>
+                            </legend>
+                            <select class="form-control" id="wheatPreviousCropSelect">
+                                <option value="0">no nitrogen-supplying crop</option>
+                                <option value="40">Soybean, Dry Bean, Field Pea, Lentil, Chickpea, or harvested Sweet
+                                    Clover
+                                </option>
+                                <option value="0">sugarbeet with yellow leaves at harvest</option>
+                                <option value="30">sugarbeet with yellow-green leaves at harvest</option>
+                                <option value="80">sugarbeet with dark-green leaves at harvest</option>
+                                <option value="150">harvested alfalfa or unharvested sweet clover (5+ plants per sqft)
+                                </option>
+                                <option value="100">harvested alfalfa or unharvested sweet clover (3-4 plants per sqft)
+                                </option>
+                                <option value="50">harvested alfalfa or unharvested sweet clover (1-2 plants per sqft)
+                                </option>
+                                <option value="0">harvested alfalfa or unharvested sweet clover (less than 1 plants per
+                                    sqft)</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-7" style="padding-left:20px;">
+                        <div class="centerDiv">
+                            <img src="images/ND2.jpg" alt="ND 3-region map" width="75%">
+                        </div>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatRegion" value="west" checked>&nbsp; Western ND
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatRegion" value="east">&nbsp; Eastern ND
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatRegion" value="langdon">&nbsp; Langdon area
+                                </label>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>tillage type</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatTillage" value="convTill" checked>&nbsp; conventional
+                                    tillage
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="Tillage greater than 2-inch depth. Thin ammonia shank or strip-till shank does not contribute to conventional till.">
+                                    <i class="fa fa-info-circle"
+                                        style="text-align:left; font-size:18px; color:green"></i>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatTillage" value="minNoTill">&nbsp; minimal no-till
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="No till less than 6 consecutive years; also called short-term no-till">
+                                    <i class="fa fa-info-circle" style="font-size:18px; color:green"></i>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatTillage" value="longNoTill">&nbsp; long-term no-till
+                                </label>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                    title="No till for at least 6 consecutive years">
+                                    <i class="fa fa-info-circle" style="font-size:18px; color:green"></i>
+                                </a>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>historical productivity</strong></i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#historicalProductivity" class="btn btn-info" data-toggle="collapse">
+                                    Details
+                                </a>
+                            </legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="high" checked>&nbsp; High
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="medium">&nbsp; Medium
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="low">&nbsp; Low
+                                </label>
+                            </div>
+                            <div>
+
+                                <div id="historicalProductivity" class="collapse" style="padding-left:5px;">
+                                    <br>
+                                    <em><u>Western North Dakota</u></em>
+                                    <p>
+                                        <b>high productivity:</b> historical yields greater than 50;<br />
+                                        <b>medium productivity:</b> historical yields between 30 bushels/acre and 50
+                                        bushels/acre;<br />
+                                        <b>low productivity:</b> historical yields less than 30 bushels/acre.<br />
+                                    </p>
+                                    <br />
+                                    <em><u>Eastern North Dakota and Langdon Area</u></em>
+                                    <p>
+                                        <b>high productivity:</b> historical yields greater than 60 bushels/acre;<br />
+                                        <b>medium productivity:</b> historical yields between 40 bushels/acre and 60
+                                        bushels/acre;<br />
+                                        <b>low productivity:</b> historical yields less than 40 bushels/acre.<br />
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="centerDiv">
+                    <button type="button" class="btn btn-primary" id="wheatCalculateBtn" data-toggle="modal"
+                        data-target="#wheatModal">
+                        <b>CALCULATE</b>
+                    </button>
+                </div>
+
+                <div class="modal fade" id="wheatModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Nitrogen Recomendation After Credits</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="centerDiv">
+                                    <h5 id="wheatResultText">result goes here</h5>
+                                    <h5>&nbsp;&nbsp;&nbsp;±30&nbsp;&nbsp;lbs/acre</h5>
+                                </div>
+                                <br>
+                                <div>
+                                    <a href="#wheatdemo" class="btn btn-warning" data-toggle="collapse"
+                                        style="float:right">
+                                        Note About the Result
+                                    </a>
+                                    <div id="wheatdemo" class="collapse">
+                                        <br>
+                                        <p>
+                                            Nitrogen recommendation in this app is based on an economic production
+                                            function
+                                            that takes into account the yield response of corn to added N, less the cost
+                                            of the N.
+                                        </p>
+                                        <p>
+                                            The final Nitrogen recommendation is the average optimal rate.
+                                            Growers may choose to apply up to 30 lb N/acre more or less than the
+                                            calculated N rates
+                                            due to protein traits of a variety, special soil conditions such as
+                                            susceptibility to spring denitrification,
+                                            application techniques that may not be most efficient or historical
+                                            experiences from the field or part of a field
+                                            that may influence N uptake and efficiency. For wheat after small grains, we
+                                            assume about 2,000 lb/acre of straw residue.
+                                            For every 2,000 lb/acre straw greater than this, add 30 lb N/acre.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
 
