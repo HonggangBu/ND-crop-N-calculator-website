@@ -629,7 +629,7 @@
                                             GetOrganicMatterCredit("sfOrganicMatter"), GetPrevCropNCredit("sunflowerPreviousCrop"), 0);
                     }
                 }
-                else if (($("#sfltnt")).is(":checked")) {// long-term no=till
+                else if (($("#sfltnt")).is(":checked")) {// long-term no-till
                     if (($("#sfos")).is(":checked")) {// oil-seed
                         baseValueTable = [
     [126, 77, 31, 0, 0, 0, 0, 0, 0],
