@@ -4,13 +4,8 @@ $(function () {
     "use strict";
     $('[data-toggle="tooltip"]').tooltip();
 
-
-
-
     //sunflower functions//
-    sunflowerWesternOilseedConventionaltill = GetNewTable(sunflowerWesternOilseedLongtermnotill, 50);
-    sunflowerWesternConfectionConventionaltill = GetNewTable(sunflowerWesternConfectionLongtermnotill, 50);
-    AddOptions($("#sfPriceSelect"), 0.09, 0.03, 0.60, 2); // auto add sunflower price list
+    GetSunflowerNewDataTables();
     AddOptions($("#sfNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add sunflower nitrogen cost list
     OnSunflowerCalculateBtnClicked(); // on Sunflower Calculate Btn Clicked, display result
 
@@ -27,7 +22,7 @@ $(function () {
     AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add wheat nitrogen cost list
     OnWheatCalculateBtnClicked(); // on wheat Calculate Btn Clicked, display result
 
-    //alert(sunflowerWesternConfectionConventionaltill[0][0]);
+
 });
 
 ////////////////////////////////////////////////////
@@ -48,7 +43,8 @@ function AddOptions(selectControl, startValue, increment, endValue, precision) {
 
 // get soil test nitrate N credit
 function GetSoilTestNitrateCredit(inputControlId) {
-    return $("#" + inputControlId).val();
+    let v = $("#" + inputControlId).val();
+    return v > 0 ? v : 0;
 }
 
 // return previous crop nitrogen credit value
@@ -80,7 +76,6 @@ function GetBaseValue(baseTable, cropPriceSelectControlId, nitrogenPriceSelectCo
     return baseValue;
 }
 
-
 // General calculation model
 // for sunflower, the tillageCredit is always equal to 0 because the base table already contains tillage credit
 function GetFinalResult(baseValue, soilTestNitrateCredit, organicMatterCredit, prevCropCredit, tillageCredit) {
@@ -88,38 +83,145 @@ function GetFinalResult(baseValue, soilTestNitrateCredit, organicMatterCredit, p
     return v > 0 ? v : 0;
 }
 
-// return a new data table that is a modified version of an existing table
+// calculate new table values based on existing table and the desired difference
 function GetNewTable(existingTable, difference) {
+    let newTable = JSON.parse(JSON.stringify(existingTable)); //deep copy, only copy value without reference
     let rowNum = existingTable.length;
     let colNum = existingTable[0].length;
-    var x = existingTable;
-    var data;
-    var newData;
     for (let i = 0; i < rowNum; i++) {
         for (let j = 0; j < colNum; j++) {
-            newData = 0;
-            data = existingTable[i][j];
-            if (data > 0) {
-                newData = data + difference;
+            if (newTable[i][j] > 0) {
+                newTable[i][j] += difference;
+                if (newTable[i][j] < 0) {
+                    newTable[i][j] = 0;
+                }
             }
-            x[i][j] = newData;
         }
     }
-    return x;
+    return newTable;
 }
-
 
 
 /////////////////////////////////////////////////////
 
 //////////////////////////    SUNFLOWER FUNCTIONS    ////////////////////////////
 
+// calculate the rest sunflower base table values based on existing table values
+function GetSunflowerNewDataTables() {
+    sunflowerWesternOilseedConventionaltill = GetNewTable(sunflowerWesternOilseedLongtermnotill, 50);
+    sunflowerWesternConfectionConventionaltill = GetNewTable(sunflowerWesternConfectionLongtermnotill, 50);
+    sunflowerWesternConfectionMinimalnotill = GetNewTable(sunflowerWesternConfectionConventionaltill, 20);
+    sunflowerWesternOilseedMinimalnotill = GetNewTable(sunflowerWesternOilseedConventionaltill, 20);
+    sunflowerEasternConfectionMinimalnotill = GetNewTable(sunflowerWesternConfectionConventionaltill, 20);
+    sunflowerEasternOilseedMinimalnotill = GetNewTable(sunflowerEasternOilseedConventionaltill, 20);
+    sunflowerLangdonConfectionConventionaltill = GetNewTable(sunflowerEasternConfectionConventionaltill, -40);
+    sunflowerLangdonOilseedConventionaltill = GetNewTable(sunflowerEasternOilseedConventionaltill, -40);
+    sunflowerLangdonConfectionLongtermnotill = GetNewTable(sunflowerEasternConfectionLongtermnotill, -40);
+    sunflowerLangdonOilseedLongtermnotill = GetNewTable(sunflowerEasternOilseedLongtermnotill, -40);
+    sunflowerLangdonConfectionMinimalnotill = GetNewTable(sunflowerEasternConfectionMinimalnotill, -40);
+    sunflowerLangdonOilseedMinimalnotill = GetNewTable(sunflowerEasternOilseedMinimalnotill, -40);
+}
 
+// get the string of the combination of sunflower region, sunflower type, and tillage type based on user selection
+function GetSunflowerRegionTillageSeedSelectionCombination() {
+    let selections = "";
+    selections = $("input[name='sfRegion']:checked").val() + "_"
+        + $("input[name='sfType']:checked").val() + "_"
+        + $("input[name='sfTillage']:checked").val();
+    return selections;
+}
 
+// get the sunflower base table (N recommendation table before credits) per the user selection
+function GetSunflowerValueTable(userSelection) {
+    var tb;
+    switch (userSelection) {
+        case "west_confection_longNoTill":
+            //tb = sunflowerWesternConfectionLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternConfectionLongtermnotill));
+            break;
+        case "west_confection_convTill":
+            //tb = sunflowerWesternConfectionConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternConfectionConventionaltill));
+            break;
+        case "west_confection_minNoTill":
+            //tb = sunflowerWesternConfectionMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternConfectionMinimalnotill));
+            break;
+        case "west_oilseed_longNoTill":
+            //tb = sunflowerWesternOilseedLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternOilseedLongtermnotill));
+            break;
+        case "west_oilseed_convTill":
+            //tb = sunflowerWesternOilseedConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternOilseedConventionaltill));
+            break;
+        case "west_oilseed_minNoTill":
+            //tb = sunflowerWesternOilseedMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerWesternOilseedMinimalnotill));
+            break;
+        case "east_confection_longNoTill":
+            //tb = sunflowerEasternConfectionLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternConfectionLongtermnotill));
+            break;
+        case "east_confection_convTill":
+            //tb = sunflowerEasternConfectionConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternConfectionConventionaltill));
+            break;
+        case "east_confection_minNoTill":
+            //tb = sunflowerEasternConfectionMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternConfectionMinimalnotill));
+            break;
+        case "east_oilseed_longNoTill":
+            //tb = sunflowerEasternOilseedLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternOilseedLongtermnotill));
+            break;
+        case "east_oilseed_convTill":
+            //tb = sunflowerEasternOilseedConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternOilseedConventionaltill));
+            break;
+        case "east_oilseed_minNoTill":
+            //tb = sunflowerEasternOilseedMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerEasternOilseedMinimalnotill));
+            break;
+        case "langdon_confection_longNoTill":
+            //tb = sunflowerLangdonConfectionLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonConfectionLongtermnotill));
+            break;
+        case "langdon_confection_convTill":
+            //tb = sunflowerLangdonConfectionConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonConfectionConventionaltill));
+            break;
+        case "langdon_confection_minNoTill":
+            //tb = sunflowerLangdonConfectionMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonConfectionMinimalnotill));
+            break;
+        case "langdon_oilseed_longNoTill":
+            //tb = sunflowerLangdonOilseedLongtermnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonOilseedLongtermnotill));
+            break;
+        case "langdon_oilseed_convTill":
+            //tb = sunflowerLangdonOilseedConventionaltill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonOilseedConventionaltill));
+            break;
+        case "langdon_oilseed_minNoTill":
+            //tb = sunflowerLangdonOilseedMinimalnotill.slice();
+            tb = JSON.parse(JSON.stringify(sunflowerLangdonOilseedMinimalnotill));
+            break;
+        default:
+            alert("No valid selection!");
+    }
+    return tb;
+}
 
+// on sunflower calculate button clicked, calculate and display the result
 function OnSunflowerCalculateBtnClicked() {
     $("#sfCalculateBtn").click(function () {
-        $("#sfResultText").text("The calculate button was clicked.");
+        let userSelectionStr = GetSunflowerRegionTillageSeedSelectionCombination();
+        let baseValueTable = GetSunflowerValueTable(userSelectionStr);
+        let finalResult = GetFinalResult(GetBaseValue(baseValueTable, "sfPriceSelect", "sfNitrogenPriceSelect"), GetSoilTestNitrateCredit("sfSoilTestNitrateInput"),
+            GetOrganicMatterCredit("sfOrganicMatterInput"), GetPreviousCropNitrogenCredit("sfPreviousCropSelect"), 0);
+
+        $("#sfResultText").text(finalResult);
     });
 }
 
@@ -169,7 +271,7 @@ function CornTillResponse() {
     }
 }
 
-
+// 
 function OnCornCalculateBtnClicked() {
     $("#cornCalculateBtn").click(function () {
         $("#cornResultText").text("The calculate button was clicked.");
@@ -179,6 +281,7 @@ function OnCornCalculateBtnClicked() {
 /////////////////////////////////////////////
 
 /////////////////////  WHEAT FUNCTIONS  ////////////////////////
+// 
 function OnWheatCalculateBtnClicked() {
     $("#wheatCalculateBtn").click(function () {
         $("#wheatResultText").text("The calculate button was clicked.");

@@ -131,8 +131,34 @@ var sunflowerWesternConfectionConventionaltill;
 // West conventional oilseed = West long-term no-till oilseed +50
 var sunflowerWesternOilseedConventionaltill;
 
+// sunflower western-ND confection minimal-no-till
+var sunflowerWesternConfectionMinimalnotill;
+
+// sunflower western-ND oilseed minimal-no-till
+var sunflowerWesternOilseedMinimalnotill;
+
+// sunflower eastern-ND confection minimal-no-till
+var sunflowerEasternConfectionMinimalnotill;
+
+// sunflower eastern-ND oilseed minimal-no-till
+var sunflowerEasternOilseedMinimalnotill;
 
 
 
+// Langdon conventional confection
+var sunflowerLangdonConfectionConventionaltill;
 
+// Langdon conventional oilseed
+var sunflowerLangdonOilseedConventionaltill;
 
+// Langdon long-term no-till confection
+var sunflowerLangdonConfectionLongtermnotill;
+
+// Langdon long-term no-till oilseed
+var sunflowerLangdonOilseedLongtermnotill;
+
+// Langdon minimal no-till confection
+var sunflowerLangdonConfectionMinimalnotill;
+
+// Langdon minimal no-till oilseed
+var sunflowerLangdonOilseedMinimalnotill;
