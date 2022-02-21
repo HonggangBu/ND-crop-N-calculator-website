@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="Scripts/sunflowerData.js"></script>
+    <script src="Scripts/wheatData.js"></script>
     <script src="Scripts/Index.js"></script>
 </head>
 
@@ -509,7 +510,7 @@
                             <legend visible="true"><i><strong>2-ft depth soil test nitrate-N (lbs/acre)</strong></i>
                             </legend>
                             <div class="form-group">
-                                <input type="number" step="0.1" class="form-control" id="wheatSoilTestnitrateInput"
+                                <input type="number" step="0.1" class="form-control" id="wheatSoilTestNitrateInput"
                                     value="0">
                             </div>
                         </fieldset>
@@ -559,6 +560,48 @@
                         </fieldset>
                         <br>
                         <fieldset>
+                            <legend visible="true"><i><strong>historical productivity</strong></i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#historicalProductivity" class="btn btn-info" data-toggle="collapse">
+                                    Details
+                                </a>
+                            </legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="high" checked>&nbsp; High
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="medium">&nbsp; Medium
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="wheatProductivity" value="low">&nbsp; Low
+                                </label>
+                            </div>
+                            <div>
+                                <div id="historicalProductivity" class="collapse" style="padding-left:5px;">
+                                    <br>
+                                    <em><u>Western North Dakota</u></em>
+                                    <p>
+                                        <b>high productivity:</b> historical yields greater than 50;<br />
+                                        <b>medium productivity:</b> historical yields between 30 bushels/acre and 50
+                                        bushels/acre;<br />
+                                        <b>low productivity:</b> historical yields less than 30 bushels/acre.<br />
+                                    </p>
+                                    <br />
+                                    <em><u>Eastern North Dakota and Langdon Area</u></em>
+                                    <p>
+                                        <b>high productivity:</b> historical yields greater than 60 bushels/acre;<br />
+                                        <b>medium productivity:</b> historical yields between 40 bushels/acre and 60
+                                        bushels/acre;<br />
+                                        <b>low productivity:</b> historical yields less than 40 bushels/acre.<br />
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset>
                             <legend visible="true"><i><strong>tillage type</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
@@ -586,49 +629,6 @@
                                     title="No till for at least 6 consecutive years">
                                     <i class="fa fa-info-circle" style="font-size:18px; color:green"></i>
                                 </a>
-                            </div>
-                        </fieldset>
-                        <br>
-                        <fieldset>
-                            <legend visible="true"><i><strong>historical productivity</strong></i>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="#historicalProductivity" class="btn btn-info" data-toggle="collapse">
-                                    Details
-                                </a>
-                            </legend>
-                            <div style="padding-left:5px;">
-                                <label class="radio-inline">
-                                    <input type="radio" name="wheatProductivity" value="high" checked>&nbsp; High
-                                </label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label class="radio-inline">
-                                    <input type="radio" name="wheatProductivity" value="medium">&nbsp; Medium
-                                </label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label class="radio-inline">
-                                    <input type="radio" name="wheatProductivity" value="low">&nbsp; Low
-                                </label>
-                            </div>
-                            <div>
-
-                                <div id="historicalProductivity" class="collapse" style="padding-left:5px;">
-                                    <br>
-                                    <em><u>Western North Dakota</u></em>
-                                    <p>
-                                        <b>high productivity:</b> historical yields greater than 50;<br />
-                                        <b>medium productivity:</b> historical yields between 30 bushels/acre and 50
-                                        bushels/acre;<br />
-                                        <b>low productivity:</b> historical yields less than 30 bushels/acre.<br />
-                                    </p>
-                                    <br />
-                                    <em><u>Eastern North Dakota and Langdon Area</u></em>
-                                    <p>
-                                        <b>high productivity:</b> historical yields greater than 60 bushels/acre;<br />
-                                        <b>medium productivity:</b> historical yields between 40 bushels/acre and 60
-                                        bushels/acre;<br />
-                                        <b>low productivity:</b> historical yields less than 40 bushels/acre.<br />
-                                    </p>
-                                </div>
                             </div>
                         </fieldset>
                     </div>
