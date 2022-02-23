@@ -274,10 +274,81 @@ function CornTillResponse() {
     }
 }
 
-// 
+
+// get the combined string of corn region, irrigation, tillage, soil texture, and yield productivity based on user selection
+function GetCornUserSelectionStringCombination() {
+    let selections = "";
+    if ($("input[name='cornRegion']:checked").val() == "westND") {
+        selections = "westND";
+    }
+    else {
+        selections = "eastND";
+        if ($("input[name='cornTill']:checked").val() == "irrigate") {
+            selections += "_" + "irrigate";
+        }
+        else if ($("input[name='cornTill']:checked").val() == "longNoTill") {
+            selections += "_" + "longNoTill";
+        }
+        else if ($("input[name='cornTill']:checked").val() == "convTill") {
+            selections += "_" + "convTill" + "_" + ($("input[name='cornSoilTexture']:checked").val());
+        }
+        else {
+            selections += "_" + "minNoTill" + "_" + $("input[name='cornSoilTexture']:checked").val();
+        }
+    }
+    return selections;
+}
+
+// get the corn recommendation value from the corresponding base table
+function GetCornBaseValue(userCornSelection) {
+    let v = 0;
+    const minNotillDiff = 20;
+    switch (userCornSelection) {
+        case "westND":
+            v = GetBaseValue(cornWest, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_irrigate":
+            v = GetBaseValue(cornEastIrrigated, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_longNoTill":
+            v = GetBaseValue(cornEastLongnotill, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_convTill_hchy":
+            v = GetBaseValue(cornHighClayHighYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_convTill_hcly":
+            v = GetBaseValue(cornHighClayLowYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_convTill_mthy":
+            v = GetBaseValue(cornMediumTextureHighYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_convTill_mtly":
+            v = GetBaseValue(cornMediumTextureLowYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "eastND_minNoTill_hchy":
+            v = GetBaseValue(cornHighClayHighYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+            break;
+        case "eastND_minNoTill_hcly":
+            v = GetBaseValue(cornHighClayLowYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+            break;
+        case "eastND_minNoTill_mthy":
+            v = GetBaseValue(cornMediumTextureHighYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+            break;
+        case "eastND_minNoTill_mtly":
+            v = GetBaseValue(cornMediumTextureLowYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+            break;
+    }
+    return v;
+}
+
+// when corn calculate button is clicked, calculate and display the nitrogen recommendation result
 function OnCornCalculateBtnClicked() {
     $("#cornCalculateBtn").click(function () {
-        $("#cornResultText").text("The calculate button was clicked.");
+        let userSelectionStr=GetCornUserSelectionStringCombination();
+        let baseValue = GetCornBaseValue(userSelectionStr);
+        let finalResult = GetFinalResult(baseValue, GetSoilTestNitrateCredit("cornSoilTestNitrateInput"),
+            GetOrganicMatterCredit("cornOrganicMatterInput"), GetPreviousCropNitrogenCredit("cornPreviousCropSelect"));
+        $("#cornResultText").text(finalResult);
     });
 }
 
@@ -300,7 +371,7 @@ function GetWheatRegionTillageProductivitySelectionCombination() {
 // That means tillage credit is already included in the returned value
 function GetWheatBaseValue(userSelection) {
     const minNotillDiff = 20;
-    const eastWestLongNotillDiff = -50;
+    const eastWestLongNotillDiff = -50; // Easter medium long-term no-till is an exception
     const langdonLongNotillDiff = -30;
     let v = 0;
 
@@ -340,7 +411,7 @@ function GetWheatBaseValue(userSelection) {
             v = GetBaseValue(wheatEastMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
             break;
         case "east_medium_longNoTill":
-            v = GetBaseValue(wheatEastMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetBaseValue(wheatEastMediumLongnotill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "west_medium_convTill":
             v = GetBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
@@ -395,7 +466,7 @@ function GetWheatBaseValue(userSelection) {
 }
 
 
-// 
+// Calculate and display wheat nitrogen recommendation result when the calculate button is clicked
 function OnWheatCalculateBtnClicked() {
     $("#wheatCalculateBtn").click(function () {
         let userSelectionStr = GetWheatRegionTillageProductivitySelectionCombination();
