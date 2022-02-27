@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\ndsu google drive\\new ND crop N calculator apps\\ND-crop-N-calculator-website\\index.html"
+            "file": "c:\\ndsu google drive\\newNCalcApps\\ND-crop-N-calculator-website\\index.html"
         }
     ]
 }
