@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-sm-7" style="padding-left:20px;">
                         <div class="centerDiv">
-                            <img src="images/ND2.jpg" alt="ND 3-region map" width="75%">
+                            <img src="images/ND_ThreeRegion.png" alt="ND 3-region map" width="75%">
                         </div>
                         <br>
                         <fieldset>
@@ -389,22 +389,26 @@
                             <legend visible="true"><i><strong>soil texture and historic yield</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="hchy" checked>&nbsp; high-clay soils with
+                                    <input type="radio" name="cornSoilTexture" value="hchy" checked>&nbsp; high-clay
+                                    soils with
                                     historic yield no less than 160 bushel/acre
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="hcly">&nbsp; high-clay soils with historic
+                                    <input type="radio" name="cornSoilTexture" value="hcly">&nbsp; high-clay soils with
+                                    historic
                                     yield less than 160 bushel/acre
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mthy">&nbsp; medium-texture soils with historic
+                                    <input type="radio" name="cornSoilTexture" value="mthy">&nbsp; medium-texture soils
+                                    with historic
                                     yield no less than 160 bushel/acre
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mtly">&nbsp; medium-texture soils with historic
+                                    <input type="radio" name="cornSoilTexture" value="mtly">&nbsp; medium-texture soils
+                                    with historic
                                     yield less than 160 bushel/acre
                                 </label>
                             </div>
@@ -540,7 +544,7 @@
                     </div>
                     <div class="col-sm-7" style="padding-left:20px;">
                         <div class="centerDiv">
-                            <img src="images/ND2.jpg" alt="ND 3-region map" width="75%">
+                            <img src="images/ND_ThreeRegion.png" alt="ND 3-region map" width="75%">
                         </div>
                         <br>
                         <fieldset>
@@ -698,7 +702,7 @@
 
             <!-- about panel -->
             <div id="about" class="container tab-pane fade"><br>
-                <div class="row">
+                <!--  <div class="row">
                     <div class="col-sm-4">
                         <div class="card cardBackground">
                             <div class="aboutTitles">
@@ -716,8 +720,8 @@
                                 <h4 class="card-title" style="text-align:center;">David Franzen</h4>
                                 <p style="text-align:center;"><b><em>Professor/Extension Soil Specialist</em></b></p>
                                 <p style="text-align:center;">Department of Soil Science, NDSU</p>
-                                <p><u>Email: <b>david.franzen@ndsu.edu</b></u></p>
-                                <p><u>phone: <b>701-799-2565</b></u></p>
+                                <p style="text-align:center;"><u>Email: <b>david.franzen@ndsu.edu</b></u></p>
+                                <p style="text-align:center;"><u>phone: <b>701-799-2565</b></u></p>
                             </div>
                         </div>
                         <br />
@@ -770,17 +774,132 @@
                                     nitrification inhibitors may modify N rate.
                                 </p>
                                 <hr>
-                                </br>
                             </div>
                         </div>
+                    </div>
+                </div> -->
+
+
+
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'tab1')"
+                        id="defaultOpen"><b>INTRODUCTION</b></button>
+                    <button class="tablinks" onclick="openTab(event, 'tab2')"><b>DOCUMENTS</b></button>
+                    <button class="tablinks" onclick="openTab(event, 'tab3')"><b>CONTACT</b></button>
+                </div>
+
+                <div id="tab1" class="tabcontent">
+                    <div class="card cardBackground">
+                        <div class="aboutTitles">
+                            <h4>INTRODUCTION</h4>
+                        </div>
                         </br>
+                        <div style="padding: 5px;">
+                            <p>
+                                This application provides three NDSU crop nitrogen recommendation calculators for
+                                use in North Dakota sunflower, corn, and spring wheat/durum, respectively.
+                                <br /><br />
+                                <img src="images/sunflower.jpg" alt="sunflower" class="imageLeft">
+                                These calculators are designed only for use by growers and crop consultants working
+                                within in North Dakota.
+                                The corn calculator might also be useful in northwest Minnesota, the northern tier
+                                of counties in South Dakota, and southern Manitoba,
+                                since data from these areas were used to build the algorithms embedded within the
+                                recommendations;
+                                however, consideration of local Province or State recommendations should also be
+                                given.
+                                <br /><br />
+                                The research N-rate data-base underlying these calculators is from the many-years of
+                                field research conducted by Dr. David Franzen,
+                                Soil Extension Specialist at North Dakota State University, and others.
+                                <br /><br />
+                                <img src="images/corn.jpg" alt="corn" class="imageRight">
+                                Nitrogen recommendation calculations are based on an economic production function
+                                that takes into account the yield response of the crop to added N, less the cost of
+                                the N.
+                                The recommendation is based not only on the yield increase from additional N, but
+                                the price of the commodity and the cost of N.
+                                More details about this "Maximum Return to Nitrogen" recommendation system can be
+                                found <a href="images/MaxReturn.pdf" target="_blank">here</a>.
+                                <br /><br />
+                                <img src="images/wheat.jpg" alt="wheat" class="imageLeft">
+                                The recommendation provided also includes a "plus-minus" value. Although many
+                                experiments were used to develop these recommendations,
+                                there is no way for us to know the N supplying capability for the soils in each
+                                field in North Dakota.
+                                Therefore, we leave it to the growers and their consultants to fine tune
+                                recommendations with their knowledge of specific field characteristics.
+                                This is especially important in wheat, where variety choice influences protein and
+                                the need for more or less N.
+                                Also, choice of N application method and decision to use effective urease or
+                                nitrification inhibitors may modify N rate.
+                            </p>
+                            <hr>
+                            </br></br>
+                        </div>
                     </div>
                 </div>
+
+                <div id="tab2" class="tabcontent">
+                    <div class="card cardBackground">
+                        <div class="aboutTitles">
+                            <h4>DOCUMENTS</h4>
+                        </div>
+                        </br>
+                        <div>
+                            <p>
+                                This place lists the documents.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab3" class="tabcontent" style="width:50%;">
+                    <div class="card cardBackground">
+                        <div class="aboutTitles">
+                            <h4>CONTACT</h4>
+                        </div>
+                        </br>
+                        <div class="center">
+                            <a href="https://www.ndsu.edu/agriculture/ag-home/directory/dave-franzen" target="_blank">
+                                <img class="card-img-top rounded-circle" src="images/Franzen.jpeg"
+                                    alt="Dr. David Franzen">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title" style="text-align:center;">David Franzen</h4>
+                            <p style="text-align:center;"><b><em>Professor/Extension Soil Specialist</em></b></p>
+                            <p style="text-align:center;">Department of Soil Science, NDSU</p>
+                            <p style="text-align:center;"><u>Email: <b>david.franzen@ndsu.edu</b></u></p>
+                            <p style="text-align:center;"><u>phone: <b>701-799-2565</b></u></p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     </div>
-    <br><br><br><br>
+    <br><br><br><br><br>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
 </body>
 
 <div id="footer">

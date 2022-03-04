@@ -22,13 +22,13 @@ $(function () {
     AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add wheat nitrogen cost list
     OnWheatCalculateBtnClicked(); // on wheat Calculate Btn Clicked, display result
 
-
 });
 
 ////////////////////////////////////////////////////
 //////////////////////    subroutine    /////////////////////////
 
 /////////////////////////   COMMON FUNCTIONS        /////////////////////////////
+
 // dynamically add select control (drop list) options
 function AddOptions(selectControl, startValue, increment, endValue, precision) {
     var optTemp, v;
@@ -115,7 +115,7 @@ function GetSunflowerNewDataTables() {
     sunflowerWesternConfectionConventionaltill = GetNewTable(sunflowerWesternConfectionLongtermnotill, sfConvTillDiff);
     sunflowerWesternConfectionMinimalnotill = GetNewTable(sunflowerWesternConfectionConventionaltill, sfMinNotillDiff);
     sunflowerWesternOilseedMinimalnotill = GetNewTable(sunflowerWesternOilseedConventionaltill, sfMinNotillDiff);
-    sunflowerEasternConfectionMinimalnotill = GetNewTable(sunflowerWesternConfectionConventionaltill, sfMinNotillDiff);
+    sunflowerEasternConfectionMinimalnotill = GetNewTable(sunflowerEasternConfectionConventionaltill, sfMinNotillDiff);
     sunflowerEasternOilseedMinimalnotill = GetNewTable(sunflowerEasternOilseedConventionaltill, sfMinNotillDiff);
     sunflowerLangdonConfectionConventionaltill = GetNewTable(sunflowerEasternConfectionConventionaltill, sfLangdonDiff);
     sunflowerLangdonOilseedConventionaltill = GetNewTable(sunflowerEasternOilseedConventionaltill, sfLangdonDiff);
@@ -344,7 +344,7 @@ function GetCornBaseValue(userCornSelection) {
 // when corn calculate button is clicked, calculate and display the nitrogen recommendation result
 function OnCornCalculateBtnClicked() {
     $("#cornCalculateBtn").click(function () {
-        let userSelectionStr=GetCornUserSelectionStringCombination();
+        let userSelectionStr = GetCornUserSelectionStringCombination();
         let baseValue = GetCornBaseValue(userSelectionStr);
         let finalResult = GetFinalResult(baseValue, GetSoilTestNitrateCredit("cornSoilTestNitrateInput"),
             GetOrganicMatterCredit("cornOrganicMatterInput"), GetPreviousCropNitrogenCredit("cornPreviousCropSelect"));

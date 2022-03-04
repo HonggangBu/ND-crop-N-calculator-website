@@ -1,4 +1,5 @@
 // Total 9 basic before-credit nitrogen recommendation tables for conventional tillage are provided
+// Note that One more special base table is for "wheat eastern ND Medium productivity long-term no-till"
 // the 9 tables are the results of the combination of productivity (3 types) and region (3 regions)
 // Each minimal no-till recommendation equals corresponding conventional till recommendation plus 20 lbs/acre
 // Eastern or western ND long-term no-till recommendation equals corresponding eastern or western ND conventional till recommendation minus 50 lbs/acre
