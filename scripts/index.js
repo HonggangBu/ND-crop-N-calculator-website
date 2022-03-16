@@ -6,20 +6,20 @@ $(function () {
 
     //sunflower functions//
     GetSunflowerNewDataTables();
-    AddOptions($("#sfNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add sunflower nitrogen cost list
+    AddOptions($("#sfNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add sunflower nitrogen cost list
     OnSunflowerCalculateBtnClicked(); // on Sunflower Calculate Btn Clicked, display result
 
     //corn functions//
-    AddOptions($("#cornPriceSelect"), 2, 1, 20, 0); // auto add corn price list
-    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add corn nitrogen cost list
+    AddOptions($("#cornPriceSelect"), 2, 1, 20, 0, 6); // auto add corn price list
+    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add corn nitrogen cost list
     OnCornRegionChange(); // hide or show irrigation/tillage div and soil texture/yield div when west ND or east ND selection is changed 
     OnCornTillChange(); // hide or show the division of soil texture/historic yield based on the change of irrigation/tillage
     OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
 
 
     //wheat & durum functions//
-    AddOptions($("#wheatPriceSelect"), 3, 1, 15, 0); // auto add wheat price list
-    AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1); // auto add wheat nitrogen cost list
+    AddOptions($("#wheatPriceSelect"), 3, 1, 15, 0, 8); // auto add wheat price list
+    AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add wheat nitrogen cost list
     OnWheatCalculateBtnClicked(); // on wheat Calculate Btn Clicked, display result
 
 });
@@ -30,13 +30,19 @@ $(function () {
 /////////////////////////   COMMON FUNCTIONS        /////////////////////////////
 
 // dynamically add select control (drop list) options
-function AddOptions(selectControl, startValue, increment, endValue, precision) {
+function AddOptions(selectControl, startValue, increment, endValue, precision, selectedIndex) {
     var optTemp, v;
     var len = Math.floor((endValue - startValue) / increment) + 1;
     for (var i = 0; i < len; i++) {
         v = startValue + i * increment;
         v = Number(v).toFixed(precision);
-        optTemp = "<option value= i>" + v + "</option>";
+        if (i==selectedIndex){
+            optTemp = "<option selected = 'true' value= i>" + v + "</option>";
+        }
+        else{
+            optTemp = "<option value= i>" + v + "</option>";
+        }
+        
         selectControl.append(optTemp);
     }
 }
