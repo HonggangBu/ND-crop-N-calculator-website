@@ -329,10 +329,23 @@
                                     sqft)</option>
                             </select>
                         </fieldset>
+                        <br>
+                        <fieldset>
+                            <legend visible="true"><i><strong>irrigation</strong></i></legend>
+                            <div style="padding-left:5px;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornIrrigation" value="nonIrrigated" checked>&nbsp; Non-Irrigated
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornIrrigation" value="Irrigated">&nbsp; Irrigated
+                                </label>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="col-sm-7" style="padding-left:20px;">
+                    <div class="col-sm-7" style="padding-left:20px;" id="nonIrrigationRelatedDiv">
                         <div class="centerDiv">
-                            <img src="images/ND.jpg" alt="ND 2-region map" width="75%">
+                            <img src="images/ND.jpg" alt="ND 4-region map" width="75%">
                         </div>
                         <br>
                         <fieldset>
@@ -345,19 +358,27 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="cornRegion" value="eastND">&nbsp; Eastern ND
                                 </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornRegion" value="langdon">&nbsp; Langdon Area
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="radio-inline">
+                                    <input type="radio" name="cornRegion" value="centralND">&nbsp; Central ND
+                                </label>
                             </div>
                         </fieldset>
                         <br>
                         <fieldset id="tillDiv">
-                            <legend visible="true"><i><strong>irrigation and tillage</strong></i></legend>
+                            <legend visible="true"><i><strong>tillage</strong></i></legend>
                             <div style="padding-left:5px;">
-                                <label>
+                                <!-- <label>
                                     <input type="radio" name="cornTill" value="irrigate" checked>&nbsp; Irrigated
                                 </label>
-                                <br>
+                                <br> -->
                                 <label>
-                                    <input type="radio" name="cornTill" value="longNoTill">&nbsp; Non-irrigated and
-                                    long-term no-till
+                                    <input type="radio" name="cornTill" value="longNoTill" checked>&nbsp; 
+                                    Long-term no-till
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="long-term no-till: No till for at least 6 consecutive years">
@@ -365,8 +386,8 @@
                                 </a>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornTill" value="convTill">&nbsp; Non-irrigated and
-                                    conventional tillage
+                                    <input type="radio" name="cornTill" value="convTill">&nbsp; 
+                                    Conventional tillage
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="conventional tillage: Tillage greater than 2-inch depth. Thin ammonia shank or strip-till shank does not contribute to conventional till.">
@@ -375,8 +396,8 @@
                                 </a>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornTill" value="minNoTill">&nbsp; Non-irrigated and
-                                    minimal no-till
+                                    <input type="radio" name="cornTill" value="minNoTill">&nbsp; 
+                                    Minimal no-till
                                 </label>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                     title="minimal no-till: No till less than 6 consecutive years; also called short-term no-till">
@@ -386,30 +407,24 @@
                         </fieldset>
                         <br>
                         <fieldset id="soilTextureDiv">
-                            <legend visible="true"><i><strong>soil texture and historic yield</strong></i></legend>
+                            <legend visible="true"><i><strong>soil texture and loss risk</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="hchy" checked>&nbsp; high-clay
-                                    soils with
-                                    historic yield no less than 160 bushel/acre
+                                    <input type="radio" name="cornSoilTexture" value="mediumTexture" checked>&nbsp; Medium texture
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="hcly">&nbsp; high-clay soils with
-                                    historic
-                                    yield less than 160 bushel/acre
+                                    <input type="radio" name="cornSoilTexture" value="highClayLowLoss">&nbsp; High-clay soils with
+                                    low loss risk
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mthy">&nbsp; medium-texture soils
-                                    with historic
-                                    yield no less than 160 bushel/acre
+                                    <input type="radio" name="cornSoilTexture" value="highClayHighLoss">&nbsp; High-clay soils with
+                                    high loss risk
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mtly">&nbsp; medium-texture soils
-                                    with historic
-                                    yield less than 160 bushel/acre
+                                    <input type="radio" name="cornSoilTexture" value="mtly">&nbsp; High-clay soils with medium leaching risk
                                 </label>
                             </div>
                         </fieldset>

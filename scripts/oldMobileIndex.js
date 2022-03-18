@@ -156,11 +156,15 @@
     // parameter "inputControlId" is the ID of a specific percentage organic matter input value
     function GetOrganicMatterCredit(inputControlId) {
         var inputValue = $("#" + inputControlId).val();
-        var percentageThreshold = 5;
-        var coef = 50;
+        var thresholdLow=6.0;
+        var thresholdHigh=7.0;
         var credit = 0;
-        if (inputValue > percentageThreshold)
-            credit = (inputValue - percentageThreshold) * coef;
+        if ((inputValue>=thresholdLow)&&(inputValue<thresholdHigh))  {
+            credit += 50;
+        }
+        if (inputValue>=thresholdHigh)  {
+            credit += 100;
+        }
         return credit;
     }
 

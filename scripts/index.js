@@ -12,9 +12,10 @@ $(function () {
     //corn functions//
     AddOptions($("#cornPriceSelect"), 2, 1, 20, 0, 6); // auto add corn price list
     AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add corn nitrogen cost list
-    OnCornRegionChange(); // hide or show irrigation/tillage div and soil texture/yield div when west ND or east ND selection is changed 
-    OnCornTillChange(); // hide or show the division of soil texture/historic yield based on the change of irrigation/tillage
-    OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
+    OnCornRegionChange(); // hide or show tillage div and soil texture div when region selection is changed 
+    OnCornTillChange(); // hide or show the division of soil texture based on the change of tillage selection
+    OnCornIrrigationChange(); // hide or show the division of non-irrigation calculation part in response to user selection of irrigated/non-irrigated
+    //OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
 
 
     //wheat & durum functions//
@@ -65,11 +66,15 @@ function GetPreviousCropNitrogenCredit(SelectGroupId) {
 // parameter "inputControlId" is the ID of a specific percentage organic matter input value
 function GetOrganicMatterCredit(inputControlId) {
     let inputValue = $("#" + inputControlId).val();
-    const percentageThreshold = 5;
-    const coef = 50.0;
-    let credit = 0;
-    if (inputValue > percentageThreshold)
-        credit = (inputValue - percentageThreshold) * coef;
+    var thresholdLow=6.0;
+    var thresholdHigh=7.0;
+    var credit = 0;
+    if ((inputValue>=thresholdLow)&&(inputValue<thresholdHigh))  {
+        credit += 50;
+    }
+    if (inputValue>=thresholdHigh)  {
+        credit += 100;
+    }
     return credit;
 }
 
@@ -239,7 +244,26 @@ function OnSunflowerCalculateBtnClicked() {
 
 /////////////////  CORN FUNCTIONS  /////////////////////////
 
-// hide or show irrigation/tillage div and soil texture/yield div when west ND or east ND selection is changed 
+// hide or show some corn UI divisions in response to user selection of irrigation type, region, and tillage type
+// hide or show division based on irrigation default selection or selection change
+function OnCornIrrigationChange(){
+    CornIrrigationResponse();
+    $("input[name='cornIrrigation']").on("change", function () {
+        CornIrrigationResponse();
+    });
+}
+
+// hide or show division based on irrigation selection
+function CornIrrigationResponse(){
+    if ($("input[name='cornIrrigation']:checked").val() === 'nonIrrigated'){
+        $("#nonIrrigationRelatedDiv").show();
+    }
+    else{
+        $("#nonIrrigationRelatedDiv").hide();
+    }
+}
+
+// hide or show tillage div and soil texture div based on region default selection or selection change
 function OnCornRegionChange() {
     CornRegionResponse();
     $("input[name='cornRegion']").on("change", function () {
@@ -248,20 +272,24 @@ function OnCornRegionChange() {
 }
 
 // sub function of "OnCornRegionChange()"
-// hide or show irrigation/tillage div and soil texture/yield div when west ND or east ND selection is changed 
+// hide or show tillage div and soil texture div based on region selection 
 function CornRegionResponse() {
     if ($("input[name='cornRegion']:checked").val() === 'westND') {
         $("#tillDiv").hide();
         $("#soilTextureDiv").hide();
     }
-    else {
+    else if ($("input[name='cornRegion']:checked").val() === 'eastND'){
         $("#tillDiv").show();
         CornTillResponse();
+    }
+    else {
+        $("#tillDiv").show();
+        $("#soilTextureDiv").hide();
     }
 }
 
 
-// hide or show the division of soil texture/historic yield based on the change of irrigation/tillage
+// hide or show the division of soil texture based on the change of tillage
 function OnCornTillChange() {
     CornTillResponse();
     $("input[name='cornTill']").on("change", function () {
@@ -270,19 +298,21 @@ function OnCornTillChange() {
 }
 
 // subfunction of "OnCornTillChange"
-// hide or show the division of soil texture/historic yield based on the change of irrigation/tillage
+// hide or show the division of soil texture based on the change of tillage
 function CornTillResponse() {
-    if (($("input[name='cornTill']:checked").val() === 'irrigate') || ($("input[name='cornTill']:checked").val() === 'longNoTill')) {
-        $("#soilTextureDiv").hide();
-    }
-    else {
-        $("#soilTextureDiv").show();
+    if ($("input[name='cornRegion']:checked").val() === 'eastND'){
+        if ($("input[name='cornTill']:checked").val() === 'longNoTill') {
+            $("#soilTextureDiv").hide();
+        }
+        else {
+            $("#soilTextureDiv").show();
+        }
     }
 }
 
 
 // get the combined string of corn region, irrigation, tillage, soil texture, and yield productivity based on user selection
-function GetCornUserSelectionStringCombination() {
+/* function GetCornUserSelectionStringCombination() {
     let selections = "";
     if ($("input[name='cornRegion']:checked").val() == "westND") {
         selections = "westND";
@@ -303,10 +333,10 @@ function GetCornUserSelectionStringCombination() {
         }
     }
     return selections;
-}
+} */
 
 // get the corn recommendation value from the corresponding base table
-function GetCornBaseValue(userCornSelection) {
+/* function GetCornBaseValue(userCornSelection) {
     let v = 0;
     const minNotillDiff = 20;
     switch (userCornSelection) {
@@ -345,10 +375,10 @@ function GetCornBaseValue(userCornSelection) {
             break;
     }
     return v;
-}
+} */
 
 // when corn calculate button is clicked, calculate and display the nitrogen recommendation result
-function OnCornCalculateBtnClicked() {
+/* function OnCornCalculateBtnClicked() {
     $("#cornCalculateBtn").click(function () {
         let userSelectionStr = GetCornUserSelectionStringCombination();
         let baseValue = GetCornBaseValue(userSelectionStr);
@@ -356,7 +386,7 @@ function OnCornCalculateBtnClicked() {
             GetOrganicMatterCredit("cornOrganicMatterInput"), GetPreviousCropNitrogenCredit("cornPreviousCropSelect"));
         $("#cornResultText").text(finalResult);
     });
-}
+} */
 
 /////////////////////////////////////////////
 
