@@ -6,21 +6,20 @@ $(function () {
 
     //sunflower functions//
     GetSunflowerNewDataTables();
-    AddOptions($("#sfNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add sunflower nitrogen cost list
+    AddOptions($("#sfNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add nitrogen cost list
     OnSunflowerCalculateBtnClicked(); // on Sunflower Calculate Btn Clicked, display result
 
     //corn functions//
-    AddOptions($("#cornPriceSelect"), 2, 1, 20, 0, 6); // auto add corn price list
-    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add corn nitrogen cost list
+    AddOptions($("#cornPriceSelect"), 2, 1, 12, 0, 6); // auto add corn price list
+    AddOptions($("#cornNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add nitrogen cost list
     OnCornRegionChange(); // hide or show tillage div and soil texture div when region selection is changed 
     OnCornTillChange(); // hide or show the division of soil texture based on the change of tillage selection
     OnCornIrrigationChange(); // hide or show the division of non-irrigation calculation part in response to user selection of irrigated/non-irrigated
-    //OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
-
-
+    OnCornCalculateBtnClicked(); // on corn Calculate Btn Clicked, display result
+    
     //wheat & durum functions//
     AddOptions($("#wheatPriceSelect"), 3, 1, 15, 0, 8); // auto add wheat price list
-    AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add wheat nitrogen cost list
+    AddOptions($("#wheatNitrogenPriceSelect"), 0.2, 0.1, 2.0, 1, 4); // auto add nitrogen cost list
     OnWheatCalculateBtnClicked(); // on wheat Calculate Btn Clicked, display result
 
 });
@@ -37,13 +36,13 @@ function AddOptions(selectControl, startValue, increment, endValue, precision, s
     for (var i = 0; i < len; i++) {
         v = startValue + i * increment;
         v = Number(v).toFixed(precision);
-        if (i==selectedIndex){
+        if (i == selectedIndex) {
             optTemp = "<option selected = 'true' value= i>" + v + "</option>";
         }
-        else{
+        else {
             optTemp = "<option value= i>" + v + "</option>";
         }
-        
+
         selectControl.append(optTemp);
     }
 }
@@ -66,13 +65,13 @@ function GetPreviousCropNitrogenCredit(SelectGroupId) {
 // parameter "inputControlId" is the ID of a specific percentage organic matter input value
 function GetOrganicMatterCredit(inputControlId) {
     let inputValue = $("#" + inputControlId).val();
-    var thresholdLow=6.0;
-    var thresholdHigh=7.0;
+    var thresholdLow = 6.0;
+    var thresholdHigh = 7.0;
     var credit = 0;
-    if ((inputValue>=thresholdLow)&&(inputValue<thresholdHigh))  {
+    if ((inputValue >= thresholdLow) && (inputValue < thresholdHigh)) {
         credit += 50;
     }
-    if (inputValue>=thresholdHigh)  {
+    if (inputValue >= thresholdHigh) {
         credit += 100;
     }
     return credit;
@@ -86,6 +85,16 @@ function GetBaseValue(baseTable, cropPriceSelectControlId, nitrogenPriceSelectCo
     baseValue = baseTable[cropPriceIndex][nitrogenPriceIndex];
     return baseValue;
 }
+
+// get modified new base value from a data table
+function GetNewBaseValue(baseTable, cropPriceSelectControlId, nitrogenPriceSelectControlId, difference) {
+    let v = GetBaseValue(baseTable, cropPriceSelectControlId, nitrogenPriceSelectControlId);
+    if (v > 0) {
+        v += difference;
+    }
+    return v;
+}
+
 
 // General calculation model
 // for sunflower, the tillageCredit is always equal to 0 because the base table already contains tillage credit
@@ -246,7 +255,7 @@ function OnSunflowerCalculateBtnClicked() {
 
 // hide or show some corn UI divisions in response to user selection of irrigation type, region, and tillage type
 // hide or show division based on irrigation default selection or selection change
-function OnCornIrrigationChange(){
+function OnCornIrrigationChange() {
     CornIrrigationResponse();
     $("input[name='cornIrrigation']").on("change", function () {
         CornIrrigationResponse();
@@ -254,11 +263,11 @@ function OnCornIrrigationChange(){
 }
 
 // hide or show division based on irrigation selection
-function CornIrrigationResponse(){
-    if ($("input[name='cornIrrigation']:checked").val() === 'nonIrrigated'){
+function CornIrrigationResponse() {
+    if ($("input[name='cornIrrigation']:checked").val() === 'nonIrrigated') {
         $("#nonIrrigationRelatedDiv").show();
     }
-    else{
+    else {
         $("#nonIrrigationRelatedDiv").hide();
     }
 }
@@ -278,7 +287,7 @@ function CornRegionResponse() {
         $("#tillDiv").hide();
         $("#soilTextureDiv").hide();
     }
-    else if ($("input[name='cornRegion']:checked").val() === 'eastND'){
+    else if ($("input[name='cornRegion']:checked").val() === 'eastND') {
         $("#tillDiv").show();
         CornTillResponse();
     }
@@ -300,7 +309,7 @@ function OnCornTillChange() {
 // subfunction of "OnCornTillChange"
 // hide or show the division of soil texture based on the change of tillage
 function CornTillResponse() {
-    if ($("input[name='cornRegion']:checked").val() === 'eastND'){
+    if ($("input[name='cornRegion']:checked").val() === 'eastND') {
         if ($("input[name='cornTill']:checked").val() === 'longNoTill') {
             $("#soilTextureDiv").hide();
         }
@@ -311,82 +320,107 @@ function CornTillResponse() {
 }
 
 
-// get the combined string of corn region, irrigation, tillage, soil texture, and yield productivity based on user selection
-/* function GetCornUserSelectionStringCombination() {
-    let selections = "";
-    if ($("input[name='cornRegion']:checked").val() == "westND") {
-        selections = "westND";
+function GetCornUserSelectionStringCombination() {
+    let str = "";
+    if ($("input[name='cornIrrigation']:checked").val() == "irrigated") {
+        str = "irrigated";
     }
     else {
-        selections = "eastND";
-        if ($("input[name='cornTill']:checked").val() == "irrigate") {
-            selections += "_" + "irrigate";
-        }
-        else if ($("input[name='cornTill']:checked").val() == "longNoTill") {
-            selections += "_" + "longNoTill";
-        }
-        else if ($("input[name='cornTill']:checked").val() == "convTill") {
-            selections += "_" + "convTill" + "_" + ($("input[name='cornSoilTexture']:checked").val());
+        if ($("input[name='cornRegion']:checked").val() == "westND") {
+            str = "westND";
         }
         else {
-            selections += "_" + "minNoTill" + "_" + $("input[name='cornSoilTexture']:checked").val();
+            str = $("input[name='cornRegion']:checked").val() + "_" + $("input[name='cornTill']:checked").val();
+            if (($("input[name='cornRegion']:checked").val() == "eastND") && ($("input[name='cornTill']:checked").val() != "longNoTill")) {
+                str += "_" + $("input[name='cornSoilTexture']:checked").val();
+            }
         }
     }
-    return selections;
-} */
+    return str;
+}
 
-// get the corn recommendation value from the corresponding base table
-/* function GetCornBaseValue(userCornSelection) {
+
+//
+//
+//
+// get the corn nitrogen recommendation base value before credits from the corresponding base table
+function GetCornBaseValue(userCornSelection) {
     let v = 0;
-    const minNotillDiff = 20;
+    const minNoTillDiff = 20;
+    const longNoTillDiff = -50;
     switch (userCornSelection) {
-        case "westND":
-            v = GetBaseValue(cornWest, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "irrigated":
+            v = GetBaseValue(cornIrrigated, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_irrigate":
-            v = GetBaseValue(cornEastIrrigated, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "westND":
+            v = GetBaseValue(cornWestLongNoTill, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "langdon_longNoTill":
+            v = GetNewBaseValue(cornLangdonConvTill, "cornPriceSelect", "cornNitrogenPriceSelect", longNoTillDiff);
+            break;
+        case "langdon_convTill":
+            v = GetBaseValue(cornLangdonConvTill, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "langdon_minNoTill":
+            v = GetNewBaseValue(cornLangdonConvTill, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
+            break;
+        case "centralND_longNoTill":
+            v = GetNewBaseValue(cornCentralConvTill, "cornPriceSelect", "cornNitrogenPriceSelect", longNoTillDiff);
+            break;
+        case "centralND_convTill":
+            v = GetBaseValue(cornCentralConvTill, "cornPriceSelect", "cornNitrogenPriceSelect");
+            break;
+        case "centralND_minNoTill":
+            v = GetNewBaseValue(cornCentralConvTill, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
         case "eastND_longNoTill":
-            v = GetBaseValue(cornEastLongnotill, "cornPriceSelect", "cornNitrogenPriceSelect");
+            v = GetBaseValue(cornEastLongNoTill, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_hchy":
-            v = GetBaseValue(cornHighClayHighYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_mediumTexture":
+            v = GetBaseValue(cornEastConvTillMediumTexture, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_hcly":
-            v = GetBaseValue(cornHighClayLowYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_highClayLowRisk":
+            v = GetBaseValue(cornEastConvTillHighClayLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_mthy":
-            v = GetBaseValue(cornMediumTextureHighYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_highClayHighRisk":
+            v = GetBaseValue(cornEastConvTillHighClayHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_mtly":
-            v = GetBaseValue(cornMediumTextureLowYield, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_highClayMediumLeaching":
+            v = GetBaseValue(cornEastConvTillMediumLeachingRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_minNoTill_hchy":
-            v = GetBaseValue(cornHighClayHighYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+        case "eastND_minNoTill_mediumTexture":
+            v = GetNewBaseValue(cornEastConvTillMediumTexture, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
-        case "eastND_minNoTill_hcly":
-            v = GetBaseValue(cornHighClayLowYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+        case "eastND_minNoTill_highClayLowRisk":
+            v = GetNewBaseValue(cornEastConvTillHighClayLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
-        case "eastND_minNoTill_mthy":
-            v = GetBaseValue(cornMediumTextureHighYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+        case "eastND_minNoTill_highClayHighRisk":
+            v = GetNewBaseValue(cornEastConvTillHighClayHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
-        case "eastND_minNoTill_mtly":
-            v = GetBaseValue(cornMediumTextureLowYield, "cornPriceSelect", "cornNitrogenPriceSelect") + minNotillDiff;
+        case "eastND_minNoTill_highClayMediumLeaching":
+            v = GetNewBaseValue(cornEastConvTillMediumLeachingRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
     }
     return v;
-} */
+}
+
+
+
+
 
 // when corn calculate button is clicked, calculate and display the nitrogen recommendation result
-/* function OnCornCalculateBtnClicked() {
+function OnCornCalculateBtnClicked() {
     $("#cornCalculateBtn").click(function () {
         let userSelectionStr = GetCornUserSelectionStringCombination();
-        let baseValue = GetCornBaseValue(userSelectionStr);
+        //alert(userSelectionStr);
+         let baseValue = GetCornBaseValue(userSelectionStr);
+         //alert(baseValue);
         let finalResult = GetFinalResult(baseValue, GetSoilTestNitrateCredit("cornSoilTestNitrateInput"),
             GetOrganicMatterCredit("cornOrganicMatterInput"), GetPreviousCropNitrogenCredit("cornPreviousCropSelect"));
         $("#cornResultText").text(finalResult);
+
     });
-} */
+}
 
 /////////////////////////////////////////////
 
@@ -416,35 +450,35 @@ function GetWheatBaseValue(userSelection) {
             v = GetBaseValue(wheatEastLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "east_low_minNoTill":
-            v = GetBaseValue(wheatEastLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatEastLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "east_low_longNoTill":
-            v = GetBaseValue(wheatEastLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetNewBaseValue(wheatEastLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", eastWestLongNotillDiff);
             break;
         case "west_low_convTill":
             v = GetBaseValue(wheatWestLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "west_low_minNoTill":
-            v = GetBaseValue(wheatWestLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatWestLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "west_low_longNoTill":
-            v = GetBaseValue(wheatWestLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetNewBaseValue(wheatWestLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", eastWestLongNotillDiff);
             break;
         case "langdon_low_convTill":
             v = GetBaseValue(wheatLangdonLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "langdon_low_minNoTill":
-            v = GetBaseValue(wheatLangdonLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatLangdonLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "langdon_low_longNoTill":
-            v = GetBaseValue(wheatLangdonLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + langdonLongNotillDiff;
+            v = GetNewBaseValue(wheatLangdonLowConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", langdonLongNotillDiff);
             break;
 
         case "east_medium_convTill":
             v = GetBaseValue(wheatEastMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "east_medium_minNoTill":
-            v = GetBaseValue(wheatEastMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatEastMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "east_medium_longNoTill":
             v = GetBaseValue(wheatEastMediumLongnotill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
@@ -453,47 +487,47 @@ function GetWheatBaseValue(userSelection) {
             v = GetBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "west_medium_minNoTill":
-            v = GetBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "west_medium_longNoTill":
-            v = GetBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetNewBaseValue(wheatWestMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", eastWestLongNotillDiff);
             break;
         case "langdon_medium_convTill":
             v = GetBaseValue(wheatLangdonMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "langdon_medium_minNoTill":
-            v = GetBaseValue(wheatLangdonMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatLangdonMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "langdon_medium_longNoTill":
-            v = GetBaseValue(wheatLangdonMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + langdonLongNotillDiff;
+            v = GetNewBaseValue(wheatLangdonMediumConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", langdonLongNotillDiff);
             break;
 
         case "east_high_convTill":
             v = GetBaseValue(wheatEastHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "east_high_minNoTill":
-            v = GetBaseValue(wheatEastHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatEastHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "east_high_longNoTill":
-            v = GetBaseValue(wheatEastHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetNewBaseValue(wheatEastHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", eastWestLongNotillDiff);
             break;
         case "west_high_convTill":
             v = GetBaseValue(wheatWestHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "west_high_minNoTill":
-            v = GetBaseValue(wheatWestHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatWestHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "west_high_longNoTill":
-            v = GetBaseValue(wheatWestHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + eastWestLongNotillDiff;
+            v = GetNewBaseValue(wheatWestHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", eastWestLongNotillDiff);
             break;
         case "langdon_high_convTill":
             v = GetBaseValue(wheatLangdonHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect");
             break;
         case "langdon_high_minNoTill":
-            v = GetBaseValue(wheatLangdonHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + minNotillDiff;
+            v = GetNewBaseValue(wheatLangdonHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", minNotillDiff);
             break;
         case "langdon_high_longNoTill":
-            v = GetBaseValue(wheatLangdonHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect") + langdonLongNotillDiff;
+            v = GetNewBaseValue(wheatLangdonHighConventionaltill, "wheatPriceSelect", "wheatNitrogenPriceSelect", langdonLongNotillDiff);
             break;
         default:
             alert("Something is wrong!");

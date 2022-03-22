@@ -30,8 +30,8 @@
                 <!-- Nav tabs -->
                 <div class="centerDiv" style="background-color:rgb(243, 228, 161)">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item active">
-                            <a class="nav-link tabTextColor" data-toggle="tab" href="#sunflower"><b>SUNFLOWER</b></a>
+                        <li class="nav-item active" id="DefaultList">
+                            <a class="nav-link tabTextColor" data-toggle="tab" href="#sunflower" id="defaultBtn"><b>SUNFLOWER</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tabTextColor" data-toggle="tab" href="#wheat"><b>SPRING WHEAT &
@@ -147,15 +147,15 @@
                             <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion" value="west" checked>&nbsp; Western ND
+                                    <input type="radio" name="sfRegion" value="west" checked>&nbsp; Western Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion" value="east">&nbsp; Eastern ND
+                                    <input type="radio" name="sfRegion" value="east">&nbsp; Eastern Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="sfRegion" value="langdon">&nbsp; Langdon area
+                                    <input type="radio" name="sfRegion" value="langdon">&nbsp; Langdon Region
                                 </label>
                             </div>
                         </fieldset>
@@ -338,7 +338,7 @@
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="cornIrrigation" value="Irrigated">&nbsp; Irrigated
+                                    <input type="radio" name="cornIrrigation" value="irrigated">&nbsp; Irrigated
                                 </label>
                             </div>
                         </fieldset>
@@ -352,19 +352,19 @@
                             <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="cornRegion" value="westND" checked>&nbsp; Western ND
+                                    <input type="radio" name="cornRegion" value="westND" checked>&nbsp; Western Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="cornRegion" value="eastND">&nbsp; Eastern ND
+                                    <input type="radio" name="cornRegion" value="eastND">&nbsp; Eastern Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="cornRegion" value="langdon">&nbsp; Langdon Area
+                                    <input type="radio" name="cornRegion" value="langdon">&nbsp; Langdon Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="cornRegion" value="centralND">&nbsp; Central ND
+                                    <input type="radio" name="cornRegion" value="centralND">&nbsp; Central Region
                                 </label>
                             </div>
                         </fieldset>
@@ -372,10 +372,6 @@
                         <fieldset id="tillDiv">
                             <legend visible="true"><i><strong>tillage</strong></i></legend>
                             <div style="padding-left:5px;">
-                                <!-- <label>
-                                    <input type="radio" name="cornTill" value="irrigate" checked>&nbsp; Irrigated
-                                </label>
-                                <br> -->
                                 <label>
                                     <input type="radio" name="cornTill" value="longNoTill" checked>&nbsp; 
                                     Long-term no-till
@@ -414,17 +410,17 @@
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="highClayLowLoss">&nbsp; High-clay soils with
+                                    <input type="radio" name="cornSoilTexture" value="highClayLowRisk">&nbsp; High-clay soils with
                                     low loss risk
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="highClayHighLoss">&nbsp; High-clay soils with
+                                    <input type="radio" name="cornSoilTexture" value="highClayHighRisk">&nbsp; High-clay soils with
                                     high loss risk
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mtly">&nbsp; High-clay soils with medium leaching risk
+                                    <input type="radio" name="cornSoilTexture" value="highClayMediumLeaching">&nbsp; High-clay soils with medium leaching risk
                                 </label>
                             </div>
                         </fieldset>
@@ -566,15 +562,15 @@
                             <legend visible="true"><i><strong>region in North Dakota</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label class="radio-inline">
-                                    <input type="radio" name="wheatRegion" value="west" checked>&nbsp; Western ND
+                                    <input type="radio" name="wheatRegion" value="west" checked>&nbsp; Western Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="wheatRegion" value="east">&nbsp; Eastern ND
+                                    <input type="radio" name="wheatRegion" value="east">&nbsp; Eastern Region
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label class="radio-inline">
-                                    <input type="radio" name="wheatRegion" value="langdon">&nbsp; Langdon area
+                                    <input type="radio" name="wheatRegion" value="langdon">&nbsp; Langdon Region
                                 </label>
                             </div>
                         </fieldset>
@@ -912,8 +908,11 @@
             evt.currentTarget.className += " active";
         }
 
-        // Get the element with id="defaultOpen" and click on it
+        // Get the element with id="defaultOpen" in the About section and click on it
         document.getElementById("defaultOpen").click();
+
+        // Set the Main Nav Tabs default tab style
+        document.getElementById("defaultBtn").click();
     </script>
 </body>
 
