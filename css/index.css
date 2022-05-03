@@ -28,7 +28,14 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 100%;
+  }
+
+  .imageCenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
   }
 
   .aboutTitles{
@@ -86,10 +93,11 @@
 /* Style the tab */
 .tab {
   float: left;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  margin-right: 20px;
   background-color: #f1f1f1;
-  width: 20%;
-  height: 300px;
+  /* width: 20%; */
+  height: 200px;
 }
 
 /* Style the buttons inside the tab */
@@ -97,14 +105,14 @@
   display: block;
   background-color: inherit;
   color: black;
-  padding: 22px 16px;
+  padding: 6px 10px;
   width: 100%;
   border: none;
   outline: none;
   text-align: left;
   cursor: pointer;
   transition: 0.3s;
-  font-size: 17px;
+  font-size: 13px;
 }
 
 /* Change background color of buttons on hover */
@@ -119,11 +127,11 @@
 
 /* Style the tab content */
 .tabcontent {
-  float: left;
-  padding: 5px 30px;
-  border: 1px solid #ccc;
-  width: 80%;
-  border-left:5em;
+  float:inline-start;
+  padding: 5px 20px;
+  /* border: 1px solid #ccc; */
+  /* width: 80%; */
+  border-left:15em;
   height: 300px;
 }
 
