@@ -40,7 +40,7 @@
 
   .aboutTitles{
     color:white; 
-    background-color:rgb(15, 2, 61); 
+    background-color:rgb(139, 65, 4); 
     text-align: center;
   }
 
@@ -135,4 +135,11 @@
   height: 300px;
 }
 
+.doc-href {
+  font-weight: bold;
+  color: darkblue;
+  padding: 10px;
+  font-family: cursive;
+  font-size: large;
+}
 
