@@ -376,8 +376,8 @@ function GetCornBaseValue(userCornSelection) {
         case "eastND_longNoTill":
             v = GetBaseValue(cornEastLongNoTill, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_mediumTexture":
-            v = GetBaseValue(cornEastConvTillMediumTexture, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_mediumTextureLowRisk":
+            v = GetBaseValue(cornEastConvTillMediumTextureLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
         case "eastND_convTill_highClayLowRisk":
             v = GetBaseValue(cornEastConvTillHighClayLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
@@ -385,11 +385,11 @@ function GetCornBaseValue(userCornSelection) {
         case "eastND_convTill_highClayHighRisk":
             v = GetBaseValue(cornEastConvTillHighClayHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_convTill_highClayMediumLeaching":
-            v = GetBaseValue(cornEastConvTillMediumLeachingRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
+        case "eastND_convTill_mediumTextureHighRisk":
+            v = GetBaseValue(cornEastConvTillMediumTextureHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect");
             break;
-        case "eastND_minNoTill_mediumTexture":
-            v = GetNewBaseValue(cornEastConvTillMediumTexture, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
+        case "eastND_minNoTill_mediumTextureLowRisk":
+            v = GetNewBaseValue(cornEastConvTillMediumTextureLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
         case "eastND_minNoTill_highClayLowRisk":
             v = GetNewBaseValue(cornEastConvTillHighClayLowRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
@@ -397,8 +397,8 @@ function GetCornBaseValue(userCornSelection) {
         case "eastND_minNoTill_highClayHighRisk":
             v = GetNewBaseValue(cornEastConvTillHighClayHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
-        case "eastND_minNoTill_highClayMediumLeaching":
-            v = GetNewBaseValue(cornEastConvTillMediumLeachingRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
+        case "eastND_minNoTill_mediumTextureHighRisk":
+            v = GetNewBaseValue(cornEastConvTillMediumTextureHighRisk, "cornPriceSelect", "cornNitrogenPriceSelect", minNoTillDiff);
             break;
     }
     return v;

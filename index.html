@@ -427,10 +427,14 @@
                         </fieldset>
                         <br>
                         <fieldset id="soilTextureDiv">
-                            <legend visible="true"><i><strong>soil texture and loss risk</strong></i></legend>
+                            <legend visible="true"><i><strong>soil texture and early season N loss risk level</strong></i></legend>
                             <div style="padding-left:5px;">
                                 <label>
-                                    <input type="radio" name="cornSoilTexture" value="mediumTexture" checked>&nbsp; Medium texture
+                                    <input type="radio" name="cornSoilTexture" value="mediumTextureLowRisk" checked>&nbsp; Medium-textured soils with low loss risk
+                                </label>
+                                <br>
+                                <label>
+                                    <input type="radio" name="cornSoilTexture" value="mediumTextureHighRisk">&nbsp; Medium-Textured soils with high loss risk
                                 </label>
                                 <br>
                                 <label>
@@ -441,10 +445,6 @@
                                 <label>
                                     <input type="radio" name="cornSoilTexture" value="highClayHighRisk">&nbsp; High-clay soils with
                                     high loss risk
-                                </label>
-                                <br>
-                                <label>
-                                    <input type="radio" name="cornSoilTexture" value="highClayMediumLeaching">&nbsp; High-clay soils with medium leaching risk
                                 </label>
                             </div>
                         </fieldset>
